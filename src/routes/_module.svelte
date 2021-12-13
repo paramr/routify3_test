@@ -1,16 +1,26 @@
 <!-- routify:option name="example-app" -->
 <script lang="ts">
-  import TopAppBar, {
-    Row,
-    Section,
-    Title,
-    AutoAdjust,
-    TopAppBarComponentDev,
-  } from '@smui/top-app-bar';
-  import IconButton from '@smui/icon-button';
-  import Button, { Label } from '@smui/button';
+import TopAppBar, {
+  Row,
+  Section,
+  Title,
+  AutoAdjust,
+  TopAppBarComponentDev,
+} from '@smui/top-app-bar';
+import IconButton from '@smui/icon-button';
+import Button, { Label } from '@smui/button';
+import { Anchor } from '@smui/menu-surface';
+import Menu, { MenuComponentDev } from '@smui/menu';
+import List, {
+  Item,
+  Separator,
+  Text,
+  Graphic,
+} from '@smui/list';
 
-  let topAppBar: TopAppBarComponentDev;
+let topAppBar: TopAppBarComponentDev;
+let anchor: HTMLDivElement;
+let menu: MenuComponentDev;
 </script>
 
 <TopAppBar bind:this={topAppBar} variant="standard" dense>
@@ -20,15 +30,31 @@
       <Title>Dense</Title>
     </Section>
     <Section align="end" toolbar>
-      <IconButton class="material-icons" aria-label="Download"
-        >file_download</IconButton
+      <div
+        use:Anchor
+        bind:this={anchor}
       >
-      <IconButton class="material-icons" aria-label="Print this page"
-        >print</IconButton
+        <IconButton
+          class="material-icons"
+          on:click={() => menu.setOpen(true)}
+        >
+          manage_accounts
+        </IconButton>
+      </div>
+      <Menu
+        bind:this={menu}
+        anchor={true}
+        bind:anchorElement={anchor}
+        anchorCorner='BOTTOM_RIGHT'
       >
-      <IconButton class="material-icons" aria-label="Bookmark this page"
-        >bookmark</IconButton
-      >
+        <List>
+          <Item>
+            <Text>
+              Menu item
+            </Text>
+          </Item>
+        </List>
+      </Menu>
     </Section>
   </Row>
 </TopAppBar>
